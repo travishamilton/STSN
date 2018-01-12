@@ -7,12 +7,18 @@ os.system('cls' if os.name == 'nt' else 'clear')	# clears the terminal window sc
 np.random.seed(7)		# seeding the random number generator to reproduce identical results
 tf.set_random_seed(7)	# seed Tensorflow random numebr generator as well
 
-layers = 40				# number of scatter/prop. layers to navigate through
-
 
 #------------------------ Read in Data ------------------------#
-X = np.transpose( np.genfromtxt('data/scatter04_T40_all_in.csv', delimiter = ',') )
-Y = np.transpose( np.genfromtxt('data/scatter04_T40_all_out.csv', delimiter = ',') )
+fileName = 'data/scatter02_T10_all_'
+X = np.transpose( np.genfromtxt(fileName + 'in.csv', delimiter = ',') )
+Y = np.transpose( np.genfromtxt(fileName + 'out.csv', delimiter = ',') )
+
+layers = fileName[-7:-5]	# read in the number of layers from the file name
+layers = int(layers)		# number of scatter/prop. layers to navigate through
+
+print "This model contains:" 
+print "\t- " + str(layers) + " time units"
+print "\t- " + str(int(fileName[-11:-9])) + " trainable weights\n"
 
 sampN, featN = X.shape	# sampN: number of training samples, featN: features per sample 
 
@@ -150,11 +156,15 @@ W_tens = tf.Variable(tf.ones(shape = [1,featN//2], dtype = tf.float64))
 
 #--------------------------- Cost Function Definition --------------------------#
 # compute least squares cost for each sample and then average out their costs
+print "Building Cost Function (Least Squares) ... ... ..."
 least_squares = tf.reduce_sum( tf.reduce_sum((transmit(X_tens, W_tens, layers) - Y_tens)**2, axis = 1) )
-
+print "Done!\n"
 
 #--------------------------- Define Optimizer --------------------------#
-train_op = tf.train.AdamOptimizer(learning_rate=0.001).minimize(least_squares)
+print "Building Optimizer ... ... ..."
+train_op = tf.train.AdamOptimizer(learning_rate=0.01).minimize(least_squares)
+print "Done!\n"
+
 
 
 #--------------------------- Training --------------------------#
@@ -176,6 +186,7 @@ with tf.Session() as sess:
 	print sess.run( tf.convert_to_tensor(Y, dtype = tf.float64) )
 	print 
 
+	print "--------- Starting Training ---------\n"
 	for i in range(epochs):
 		_, loss_value = sess.run([train_op, least_squares], feed_dict = {X_tens: X, Y_tens: Y})
 		print "Epoch: " + str(i+1) + "\t\tLoss: " + str(loss_value)
