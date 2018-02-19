@@ -176,8 +176,8 @@ W_tens = tf.Variable(tf.ones(shape = [1,featN//2], dtype = tf.float64))
 # compute least squares cost for each sample and then average out their costs
 print "Building Cost Function (Least Squares) ... ... ..."
 Yhat_tens = transmit(X_tens, W_tens, layers)
-a = 50 * 2 - 2
-b = 60 * 2 - 1
+a = 50 * 2 - 1
+b = 60 * 2
 masked_Y = mask(Yhat_tens - Y_tens, a, b)
 
 # least_squares = tf.reduce_sum( tf.reduce_sum((masked_Y)**2, axis = 1) ) / (featN - (b-a+1))
