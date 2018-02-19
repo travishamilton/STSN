@@ -1,9 +1,15 @@
-# lightPropagation
-Project modeling the propagation of light through some material.
+# STSN
+Project modeling the propagation of light through some unknown material.
 
 Please feel free to add or modify the code accordingly and make suggestions with pull requests or via e-mail.
 
+I.
+1. travelNorm.py contains the Tensorflow Python script for the "unmasked version" of the STSN
+2. travelMask.py contains the Tensorflow ... ... ... ... ...   "masked version" where a certain region is omitted during the loss function calculation.
+3. plotCostsAndWeights.m contains the MATLAB script for plotting the costs and weights of each test
+4. scatter_n4_T40.py contains the original (non-Tensorflow) NumPy and Autograd implementation of the STSN (no masking applied).
 
+II.
 The naming of the data files under data/... is:
 scatter_wL_TnL_all_io.csv
 
@@ -12,7 +18,7 @@ where:
 - nL: number of scatter/prop layers (time-depth)
 - io: either in or out to identify input/output pairs
 
-For the cases:
-1. 2-weights cases (wL = 2), the weight values should be 0.5 at indices 52 and 60 respectively
-2. 4-weights cases (wL = 4), the wight values should be 0.5, 0.9, 0.7, 0.3 at indices 52, 57, 59, amd 66 respectively
-3. Have to clarify with Andrew about the 1-weight case
+III.
+The results/ sub-directory contains:
+- CSV files with training loss and network weights at the respective epoch
+- Figures for results of the CSV files
