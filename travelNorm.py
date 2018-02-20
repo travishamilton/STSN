@@ -23,9 +23,9 @@ Y = np.transpose( np.genfromtxt(fileName + 'out.csv', delimiter = ',') )
 layers = fileName[-7:-5]	# read in the number of layers from the file name
 layers = int(layers)		# number of scatter/prop. layers to navigate through
 
-print "This model contains:" 
-print "\t- " + str(layers) + " time units"
-print "\t- " + str(int(fileName[-11:-9])) + " scatter weights\n"
+print("This model contains:")
+print("\t- " + str(layers) + " time units")
+print("\t- " + str(int(fileName[-11:-9])) + " scatter weights\n")
 
 sampN, featN = X.shape	# sampN: number of training samples, featN: features per sample 
 
@@ -160,16 +160,16 @@ W_tens = tf.Variable(tf.ones(shape = [1,featN//2], dtype = tf.float64))
 
 #--------------------------- Cost Function Definition --------------------------#
 # compute least squares cost for each sample and then average out their costs
-print "Building Cost Function (Least Squares) ... ... ..."
+print("Building Cost Function (Least Squares) ... ... ...")
 Yhat_tens = transmit(X_tens, W_tens, layers)
 # least_squares = tf.reduce_sum( tf.reduce_sum((Yhat_tens - Y_tens)**2, axis = 1) ) / featN
 least_squares = tf.norm((Yhat_tens - Y_tens)**2, ord=2)**2 / featN * 200
-print "Done!\n"
+print("Done!\n")
 
 #--------------------------- Define Optimizer --------------------------#
-print "Building Optimizer ... ... ..."
+print("Building Optimizer ... ... ...")
 train_op = tf.train.AdamOptimizer(0.08).minimize(least_squares)
-print "Done!\n"
+print("Done!\n")
 
 
 
@@ -181,19 +181,19 @@ with tf.Session() as sess:
 	sess.run( tf.global_variables_initializer() )
 	
 	# I did all this tf.convert_to_tensor(.) crap to print out information before training for my own sanity
-	print "Tensor X:"
-	print X
-	print
+	print("Tensor X:")
+	print(X)
+	print("")
 
-	print "Tensor W: " 
-	print W_tens.eval()
-	print
+	print("Tensor W: ") 
+	print(W_tens.eval())
+	print("")
 
-	print "Tensor Y: "
-	print Y
-	print
+	print("Tensor Y: ")
+	print(Y)
+	print("")
 
-	print "--------- Starting Training ---------\n"
+	print("--------- Starting Training ---------\n")
 	for i in range(1, epochs+1):
 		_, loss_value = sess.run([train_op, least_squares], feed_dict = {X_tens: X, Y_tens: Y})
 
@@ -203,8 +203,8 @@ with tf.Session() as sess:
 				currStatus.append(w)
 			table.append( currStatus )
 
-			print "Epoch: " + str(table[-1][0]) + "\t\tLoss: " + str(table[-1][1])
-			print W_tens.eval()
+			print("Epoch: " + str(table[-1][0]) + "\t\tLoss: " + str(table[-1][1]))
+			print(W_tens.eval())
 
 
 headers = ['Epoch', 'Loss']
