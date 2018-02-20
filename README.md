@@ -7,7 +7,7 @@ I.
 1. travelNorm.py contains the Tensorflow Python script for the "unmasked version" of the STSN
 2. travelMask.py contains the Tensorflow ... ... ... ... ...   "masked version" where a certain region is omitted during the loss function calculation.
 3. plotCostsAndWeights.m contains the MATLAB script for plotting the costs and weights of each test
-4. scatter_n4_T40.py contains the original (non-Tensorflow) NumPy and Autograd implementation of the STSN (no masking applied).
+4. (OUTDATED) scatter_n4_T40.py contains the original (non-Tensorflow) NumPy and Autograd implementation of the STSN (no masking applied).
 
 II.
 The naming of the data files under data/... is:
