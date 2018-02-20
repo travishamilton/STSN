@@ -1,7 +1,7 @@
 # STSN
 Project modeling the propagation of light through some unknown material.
 
-Please feel free to add or modify the code accordingly and make suggestions with pull requests or via e-mail.
+Please feel free to add or modify the code accordingly and make suggestions with push requests or via e-mail.
 
 I.
 1. travelNorm.py contains the Tensorflow Python script for the "unmasked version" of the STSN
